@@ -1,0 +1,51 @@
+REE BINARY LICENSE AGREEMENT
+
+Last updated: 16 March 2026
+
+IMPORTANT: BY DOWNLOADING, PULLING, INSTALLING, ACCESSING, OR USING THE SOFTWARE, YOU AGREE TO THIS REE BINARY LICENSE AGREEMENT (THE “AGREEMENT”). IF YOU DO NOT AGREE, DO NOT DOWNLOAD, PULL, INSTALL, ACCESS, OR USE THE SOFTWARE.
+
+This Agreement is between Gensyn, Inc. (“Gensyn,” “we,” “our,” or “us”) and the individual or entity that downloads, pulls, installs, accesses, or uses the Software (“you” or “your”).
+1.  Definitions
+1.1.  “Software” means the proprietary object-code versions of the REE compiler and the REE reproducible-operators library made available by Gensyn in this release, including when distributed in a Docker image, container, or other binary form, and any proprietary updates or accompanying proprietary documentation that Gensyn makes available with them. The Software does not include Open Source Components.
+1.2.  “Open Source Components” means the REE SDK and any third-party or other components that are expressly identified as subject to the MIT License or another open-source license. Open Source Components are licensed under their respective licenses and not under this Agreement.
+1.3.  “Gensyn Network” means any mainnet, testnet, devnet, preview network, protocol, service, or other networked environment administered by the Gensyn Foundation (or its designee) and designated in official documentation as part of the Gensyn Network.
+1.4.  “REE Demo” means a non-production demonstration, preview, pilot, proof-of-concept, sandbox, or evaluation of REE itself, including public demos and previews, customer proofs-of-concept, and internal evaluations by prospective users or customers, in each case solely to evaluate, validate, test, integrate with, or showcase REE, and not to support any off-network production deployment or off-network operational use other than a REE Demo.
+2.  License Grant
+Subject to your compliance with this Agreement, Gensyn grants you a limited, revocable, non-exclusive, non-transferable, non-sublicensable license during the term of this Agreement to download, pull, install, store, load, execute, display, and use the Software, in object-code form only, and to make copies as reasonably necessary for those acts, solely:
+(a)   on or in connection with the Gensyn Network, including to develop, test, deploy, operate, and offer applications, agents, protocols, services, and other products on the Gensyn Network that incorporate, invoke, rely on, or expose the functionality or outputs of the Software, and to permit third parties to access and use such functionality or outputs solely through those applications, agents, protocols, services, and products on or in connection with the Gensyn Network; and
+(b)  outside the Gensyn Network, solely to conduct a REE Demo, including internal evaluation, testing, validation, sandboxing, and related integration activities directly tied to the REE Demo, and including permitting third parties to access the functionality of the Software solely as part of that REE Demo.
+No source-code rights are granted under this Agreement.
+3.  Restrictions
+Except as expressly permitted in Section 2, you may not, and may not permit any third party to:
+(a) use the Software outside the scope of this Agreement;
+(b) use the Software outside the Gensyn Network in production or to support any revenue-generating service, commercial service offering, managed service, or internal operational workload or business process, except solely as expressly permitted for a REE Demo under Section 2(b);
+(c) sell, resell, sublicense, distribute, publish, transfer, assign, lease, rent, lend, timeshare, outsource, or otherwise make the Software available to any third party, except (i) as expressly permitted under Section 2(a) with respect to access to the functionality or outputs of the Software on or in connection with the Gensyn Network, or (ii) as expressly permitted under Section 2(b) as part of a REE Demo;
+(d) except for use on or in connection with the Gensyn Network as expressly permitted under Section 2(a), use the Software to build, operate, support, or enable any standalone or general-purpose off-network reproducible execution, verification, or AI-verification product, service, hosted offering, managed service, platform, or network that competes with REE or Gensyn’s reproducible execution, verification, or AI-verification offerings, or any off-network production deployment, unless separately authorized by Gensyn in a written agreement;
+(e) modify, adapt, translate, create derivative works of, reverse engineer, decompile, disassemble, or otherwise attempt to derive the source code for the Software, or bypass or circumvent any technical restrictions in the Software, except to the limited extent such restriction is prohibited by applicable law and cannot be waived by contract;
+(f) remove, alter, or obscure any copyright, trademark, or other proprietary notices included in or with the Software; or
+(g) use the Software in violation of applicable law or regulation.
+4.  Benchmark Publication
+You may publish benchmark, performance, or comparison results regarding the Software, provided that you identify the Software version used and the material test conditions and methodology sufficient to allow reasonable interpretation of the results.
+5.  Open Source Components
+Open Source Components are licensed under their respective open-source licenses and not under this Agreement. This Agreement does not limit any rights granted to you under any applicable open-source license. In the event of a conflict between this Agreement and an applicable open-source license, the open-source license controls solely with respect to the relevant Open Source Component.
+6.  Ownership
+The Software is licensed, not sold. As between you and Gensyn, Gensyn and its licensors retain all right, title, and interest in and to the Software and all related intellectual property rights. No rights are granted except as expressly set forth in this Agreement.
+7.  Feedback
+If you provide Gensyn with suggestions, ideas, bug reports, or other feedback regarding the Software, Gensyn may use and exploit that feedback without restriction or obligation to you.
+8.  Term and Termination
+This Agreement begins when you first download, pull, install, access, or use the Software and continues until terminated.
+This Agreement terminates automatically if you breach it. Gensyn may also terminate this Agreement at any time, for any reason or no reason, upon thirty (30) days’ prior notice, which may be given by posting notice in the relevant GitHub repository, release, or official Gensyn documentation.
+Upon termination, you must immediately stop using the Software and delete or destroy all copies of the Software in your possession or control. Sections 3 through 13 will survive termination.
+9.  Disclaimer of Warranties
+THE SOFTWARE IS PROVIDED “AS IS” AND “AS AVAILABLE.” TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, GENSYN AND ITS LICENSORS DISCLAIM ALL WARRANTIES, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, INCLUDING ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, NON-INFRINGEMENT, AND ANY WARRANTIES ARISING FROM COURSE OF DEALING, USAGE, OR TRADE PRACTICE. GENSYN DOES NOT WARRANT THAT THE SOFTWARE WILL BE UNINTERRUPTED, ERROR-FREE, OR SECURE, OR THAT ANY OUTPUT OR RESULT WILL MEET YOUR REQUIREMENTS.
+10.  Limitation of Liability
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT WILL GENSYN OR ITS LICENSORS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS, REVENUE, GOODWILL, DATA, OR BUSINESS INTERRUPTION, ARISING OUT OF OR RELATING TO THIS AGREEMENT OR THE SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE TOTAL AGGREGATE LIABILITY OF GENSYN AND ITS LICENSORS ARISING OUT OF OR RELATING TO THIS AGREEMENT OR THE SOFTWARE WILL NOT EXCEED USD $100.
+11.  Governing Law; Venue
+This Agreement is governed by the laws of the State of Delaware, without regard to its conflict-of-laws rules. The parties submit to the exclusive jurisdiction of the state and federal courts located in Delaware for any dispute arising out of or relating to this Agreement or the Software, and each party waives any objection to venue or inconvenient forum in those courts.
+12.  Amendments
+Gensyn may modify this Agreement from time to time by posting an updated version with the Software, in the relevant GitHub repository or release, or in official Gensyn documentation. Unless the updated Agreement states a later effective date, the updated Agreement is effective upon posting.
+Your continued download, pull, installation, access, or use of the Software after the effective date of an updated Agreement constitutes your acceptance of the updated Agreement. If you do not agree to an updated Agreement, you must stop using the Software and delete or destroy all copies of the Software in your possession or control. An updated Agreement supersedes all prior versions of this Agreement with respect to continued use of the Software from the effective date onward, including continued use of previously downloaded or pulled copies.
+13.  General
+You may not assign or transfer this Agreement, in whole or in part, without Gensyn’s prior written consent. Any attempted assignment in violation of the foregoing is void. Gensyn may assign this Agreement without restriction.This Agreement is the entire agreement between you and Gensyn regarding the Software and supersedes any prior or contemporaneous understandings regarding the Software.
+If any provision of this Agreement is held unenforceable, that provision will be enforced to the maximum extent permitted and the remaining provisions will remain in full force and effect. A failure to enforce any provision of this Agreement will not constitute a waiver of that provision or any other provision. For uses outside the scope of this Agreement, a separate written agreement with Gensyn is required.
