@@ -770,6 +770,7 @@ class ReeTUI:
                 if key == 27:
                     # On mac terminals, Fn+Delete may begin with ESC and then
                     # produce "[3~". Use a non-blocking probe to disambiguate.
+                    # Bracketed paste (\033[200~...\033[201~) is also handled here.
                     win.nodelay(True)
                     try:
                         k1 = win.getch()
@@ -782,9 +783,37 @@ class ReeTUI:
                                 if cursor < len(value):
                                     value = value[:cursor] + value[cursor + 1 :]
                                 continue
+                            if k2 == ord("2") and k3 == ord("0"):
+                                k4 = win.getch()
+                                k5 = win.getch()
+                                if k4 == ord("0") and k5 == ord("~"):
+                                    # Bracketed paste start (\033[200~): read until \033[201~.
+                                    win.nodelay(False)
+                                    pasted: list[str] = []
+                                    while True:
+                                        pc = win.getch()
+                                        if pc == 27:
+                                            nc = win.getch()
+                                            if nc == ord("["):
+                                                rest = [win.getch() for _ in range(4)]
+                                                if rest == [ord("2"), ord("0"), ord("1"), ord("~")]:
+                                                    break
+                                                for rc in [pc, nc] + rest:
+                                                    if 32 <= rc <= 126:
+                                                        pasted.append(chr(rc))
+                                            else:
+                                                for rc in [pc, nc]:
+                                                    if 32 <= rc <= 126:
+                                                        pasted.append(chr(rc))
+                                        elif 32 <= pc <= 126:
+                                            pasted.append(chr(pc))
+                                    paste_str = "".join(pasted)
+                                    value = value[:cursor] + paste_str + value[cursor:]
+                                    cursor += len(paste_str)
+                                    continue
                     finally:
                         win.nodelay(False)
-                    return
+                    continue  # Discard unrecognized escape sequences; keep editing.
                 if key == curses.KEY_LEFT:
                     cursor = max(0, cursor - 1)
                     continue
