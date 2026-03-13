@@ -206,6 +206,12 @@ class ReeTUI:
                 return f.value.strip()
         return ""
 
+    def _reset_extra_args(self) -> None:
+        for f in self.fields:
+            if f.key == "extra_args":
+                f.value = ""
+                return
+
     def set_phase(self, phase: Phase) -> None:
         self.phase = phase
         self.reached_phases.add(phase)
@@ -696,7 +702,10 @@ class ReeTUI:
             elif key in (curses.KEY_DOWN, ord("j")):
                 selected = min(len(SUBCOMMAND_OPTIONS) - 1, selected + 1)
             elif key in (10, 13, curses.KEY_ENTER):
+                prev = self.fields[self.selected].value
                 self.fields[self.selected].value = SUBCOMMAND_OPTIONS[selected]
+                if self.fields[self.selected].value != prev:
+                    self._reset_extra_args()
                 return
             elif key in (27, ord("q")):
                 return
@@ -963,15 +972,19 @@ class ReeTUI:
                 self.selected = visible[min(len(visible) - 1, pos + 1)]
         elif key == curses.KEY_LEFT and self.fields[self.selected].key == "subcommand":
             idx = self.current_subcommand_index()
-            self.fields[self.selected].value = SUBCOMMAND_OPTIONS[max(0, idx - 1)]
+            new_idx = max(0, idx - 1)
+            self.fields[self.selected].value = SUBCOMMAND_OPTIONS[new_idx]
+            if new_idx != idx:
+                self._reset_extra_args()
             visible = self.visible_field_indices()
             if self.selected not in visible and visible:
                 self.selected = visible[0]
         elif key == curses.KEY_RIGHT and self.fields[self.selected].key == "subcommand":
             idx = self.current_subcommand_index()
-            self.fields[self.selected].value = SUBCOMMAND_OPTIONS[
-                min(len(SUBCOMMAND_OPTIONS) - 1, idx + 1)
-            ]
+            new_idx = min(len(SUBCOMMAND_OPTIONS) - 1, idx + 1)
+            self.fields[self.selected].value = SUBCOMMAND_OPTIONS[new_idx]
+            if new_idx != idx:
+                self._reset_extra_args()
             visible = self.visible_field_indices()
             if self.selected not in visible and visible:
                 self.selected = visible[0]
