@@ -256,13 +256,18 @@ emit_phase "prepare:done"
 CONTAINER_CACHE="/home/gensyn/.cache"
 HOST_CACHE="${HOME}/.cache"
 
+TASKS_ROOT_ARGS=()
+if [[ "${SUBCOMMAND}" != "validate" ]]; then
+  TASKS_ROOT_ARGS=(--tasks-root "${CONTAINER_CACHE}/gensyn")
+fi
+
 DOCKER_CMD=(
   docker run --rm
   ${DOCKER_GPU_ARGS+"${DOCKER_GPU_ARGS[@]}"}
   "${DOCKER_MOUNTS[@]}"
   "${IMAGE_LOCAL}"
   "${SUBCOMMAND}"
-  --tasks-root "${CONTAINER_CACHE}/gensyn"
+  "${TASKS_ROOT_ARGS[@]+"${TASKS_ROOT_ARGS[@]}"}"
   "${ARGS[@]}"
 )
 
