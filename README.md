@@ -91,6 +91,11 @@ The `validate` subcommand validates that a given receipt is properly structured 
 
 # Patch Notes
 
+## 04 June 2026
+
+- Updated REE image to v0.4.0.
+- Added `enable_thinking` for chat templates.
+
 ## 15 May 2026
 
 - Updated REE image to v0.3.0.
