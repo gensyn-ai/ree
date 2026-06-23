@@ -43,7 +43,7 @@ set -euo pipefail
 # See the gensyn-sdk documentation for more detailed usage options:
 #   https://docs.gensyn.ai/tech/ree
 
-IMAGE_REMOTE="gensynai/ree:v0.3.0"
+IMAGE_REMOTE="gensynai/ree:v0.4.0"
 IMAGE_LOCAL="ree"
 
 emit_phase() {
