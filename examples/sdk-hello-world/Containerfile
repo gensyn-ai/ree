@@ -1,0 +1,6 @@
+FROM gensynai/ree:v0.4.0
+
+COPY hello_world.py /app/hello_world.py
+
+ENTRYPOINT ["python3", "/app/hello_world.py"]
+CMD []
