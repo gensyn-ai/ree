@@ -1,4 +1,4 @@
-FROM gensynai/ree:v0.4.0
+FROM gensynai/ree:latest
 
 COPY hello_world.py /app/hello_world.py
 

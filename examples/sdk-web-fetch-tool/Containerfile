@@ -1,0 +1,6 @@
+FROM gensynai/ree:latest
+
+COPY web_fetch_tool.py /app/web_fetch_tool.py
+
+ENTRYPOINT ["python3", "/app/web_fetch_tool.py"]
+CMD []

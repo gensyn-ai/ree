@@ -91,6 +91,12 @@ The `validate` subcommand validates that a given receipt is properly structured 
 
 # Patch Notes
 
+## 10 July 2026
+
+- Updated REE image to v0.5.0.
+- Improved kernel and model performance.
+- Various bug fixes.
+
 ## 04 June 2026
 
 - Updated REE image to v0.4.0.

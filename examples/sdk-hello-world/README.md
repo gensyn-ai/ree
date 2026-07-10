@@ -12,7 +12,12 @@ In this directory are two files:
 The demo app can be run directly in the REE container like so:
 
 ```
-docker run --rm -v ~/.cache:/home/gensyn/.cache -v $PWD:/app --entrypoint python3 ree /app/hello_world.py
+docker run --rm \
+  -v ~/.cache:/home/gensyn/.cache \
+  -v $PWD:/app \
+  --entrypoint python3 \
+  gensynai/ree:latest \
+  /app/hello_world.py
 ```
 
 This command binds the cache and code directories, sets the container's initial command to `python3`, and runs `/app/hello_world.py` as an argument. This style is recommended for fast iteration on apps that don't need any additional dependencies in the container.
@@ -35,4 +40,4 @@ docker run --rm -v ~/.cache:/home/gensyn/.cache ree-sdk-hello-world
 
 ## Putting it all together
 
-These two approaches aren't mututally exclusive! We can define our own derived image, but can also run arbitrary code in it without rebuilding the image every time. In that case, you only rebuild the derived image when its Containerfile changes. Then, use the direct syntax to run your app.
+These two approaches aren't mutually exclusive! We can define our own derived image, but can also run arbitrary code in it without rebuilding the image every time. In that case, you only rebuild the derived image when its Containerfile changes. Then, use the direct syntax to run your app.
