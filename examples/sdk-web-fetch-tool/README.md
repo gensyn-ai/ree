@@ -15,6 +15,6 @@ docker run --rm \
   -v "$HOME/.cache:/home/gensyn/.cache" \
   -v "$PWD:/app" \
   --entrypoint python3 \
-  gensynai/ree:latest \
+  gensynai/ree:v0.5.0 \
   /app/web_fetch_tool.py
 ```

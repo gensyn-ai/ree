@@ -91,6 +91,18 @@ The `validate` subcommand validates that a given receipt is properly structured 
 
 # Patch Notes
 
+## 27 August 2026
+
+- Updated REE image to v0.6.0.
+- Upgraded PyTorch to 2.11.0, Transformers to 4.57.6, and urllib3 to 2.7.0.
+- Modernized ONNX export with PyTorch's dynamo path and torch-native dynamic shapes.
+- Expanded model compatibility, including ONNX LayerNormalization models without a bias input.
+- Added reproducible int8 attention, fused gathered-log-probability, and MoE expert GEMM kernels.
+- Improved reproducible attention, matmul, softmax, and RMSNorm performance.
+- Updated OpenSSL and SQLite runtime packages to address known vulnerabilities.
+- Receipt compatibility: v0.6.0 changes the bit-level output of the 3D RMSNorm kernel. Some v0.5.0 receipts may not re-verify with v0.6.0.
+- Various model-compatibility and correctness fixes.
+
 ## 10 July 2026
 
 - Updated REE image to v0.5.0.

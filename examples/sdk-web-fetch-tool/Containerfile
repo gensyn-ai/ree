@@ -1,4 +1,4 @@
-FROM gensynai/ree:latest
+FROM gensynai/ree:v0.5.0
 
 COPY web_fetch_tool.py /app/web_fetch_tool.py
 

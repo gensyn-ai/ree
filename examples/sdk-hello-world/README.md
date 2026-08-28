@@ -16,7 +16,7 @@ docker run --rm \
   -v ~/.cache:/home/gensyn/.cache \
   -v $PWD:/app \
   --entrypoint python3 \
-  gensynai/ree:latest \
+  gensynai/ree:v0.5.0 \
   /app/hello_world.py
 ```
 
