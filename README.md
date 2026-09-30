@@ -91,6 +91,19 @@ The `validate` subcommand validates that a given receipt is properly structured 
 
 # Patch Notes
 
+## 30 September 2026
+
+- Updated REE image to v0.7.0.
+- Upgraded PyTorch to 2.12.1 and Transformers to 5.10.4.
+- Added an experimental reproducible quantized inference path to the SDK (H100 only) - quantize a Qwen model and run a reproducible inference.
+- Faster reproducible CUDA inference: staged and batched decode GEMVs, fp32-staged fp16/bf16 prefill GEMM, and padded unaligned fp16/bf16 GEMM shapes instead of a scalar fallback.
+- Added reproducible kernels for paged KV-cache attention, block-sparse causal attention, Gated DeltaNet, MLA, stochastic rounding and grouped expert matmul.
+- Expanded model compatibility, including xLSTM, DeepSeek-V2 MoE blocks and nested multimodal configs.
+- Brought more operators to byte-exact parity with CPU on Apple silicon (Metal).
+- Made `ree.sh` more robust when installing packages: apt list refreshes are retried, and the needrestart prompt no longer hangs the install.
+- Receipt compatibility: v0.7.0 changes some outputs relative to v0.6.0. Transformers 5.x tokenizes prompts differently for some models (OLMo-1B-hf and Yi-1.5-6B-Chat among the validation set); matmul and convolution now always write a zero result as +0.0; and silu, sin, tan, sqrt, rsqrt and log treat subnormal inputs as zero. Some v0.6.0 receipts may not re-verify with v0.7.0.
+- Various model-compatibility and correctness fixes.
+
 ## 27 August 2026
 
 - Updated REE image to v0.6.0.

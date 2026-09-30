@@ -43,7 +43,7 @@ set -euo pipefail
 # See the gensyn-sdk documentation for more detailed usage options:
 #   https://docs.gensyn.ai/tech/ree
 
-IMAGE_REMOTE="gensynai/ree:v0.6.0"
+IMAGE_REMOTE="gensynai/ree:v0.7.0"
 IMAGE_LOCAL="ree"
 
 emit_phase() {
@@ -165,12 +165,46 @@ install_acl_linux() {
   fi
 
   # Keep sudo non-interactive here to avoid TUI hangs waiting on a hidden prompt.
-  if command -v apt >/dev/null 2>&1; then
-    sudo -n apt install -y acl && return 0
-  fi
-  if command -v apt-get >/dev/null 2>&1; then
-    DEBIAN_FRONTEND=noninteractive sudo -n apt-get install -y acl && return 0
-  fi
+  # sudo's env_reset strips DEBIAN_FRONTEND/NEEDRESTART_MODE from the caller's
+  # environment, so they must be passed through explicitly via `env` for the
+  # command sudo runs -- setting them before `sudo` only scopes them to sudo
+  # itself. Without this, installing acl pulls in needrestart, which opens an
+  # interactive TUI prompt and hangs until the job times out.
+  # Two attempts on Debian/Ubuntu, with `apt-get update` in between. An image
+  # that ships no package lists, or stale ones, reports
+  #   E: Package 'acl' has no installation candidate
+  # which reads like acl is unavailable on the distro rather than like an index
+  # that was never fetched. Refreshing unconditionally would put a package-list
+  # download in front of every run on machines where the first attempt already
+  # works, so only refresh after one fails.
+  # The refresh itself can fail fast: on a freshly booted VM, apt-daily or
+  # unattended-upgrades holds the package-list lock, and `update` exits within
+  # milliseconds having fetched nothing. Retry it, and print its output when it
+  # gives up, so the log says why instead of repeating "no installation
+  # candidate".
+  for apt_bin in apt apt-get; do
+    command -v "$apt_bin" >/dev/null 2>&1 || continue
+    sudo -n env DEBIAN_FRONTEND=noninteractive NEEDRESTART_MODE=a "$apt_bin" install -y acl && return 0
+    echo "Note: installing acl failed; refreshing package lists and retrying." >&2
+    local update_log attempt
+    update_log="$(mktemp)"
+    for attempt in 1 2 3 4 5 6; do
+      # The log is the caller's own temp file; it should not be opened as root.
+      # shellcheck disable=SC2024
+      if sudo -n env DEBIAN_FRONTEND=noninteractive NEEDRESTART_MODE=a "$apt_bin" update >"$update_log" 2>&1; then
+        break
+      fi
+      if [[ "$attempt" == 6 ]]; then
+        echo "Warning: '$apt_bin update' failed 6 times; last output:" >&2
+        cat "$update_log" >&2
+      else
+        sleep 10
+      fi
+    done
+    rm -f "$update_log"
+    sudo -n env DEBIAN_FRONTEND=noninteractive NEEDRESTART_MODE=a "$apt_bin" install -y acl && return 0
+    break
+  done
   if command -v dnf >/dev/null 2>&1; then
     sudo -n dnf install -y acl && return 0
   fi
