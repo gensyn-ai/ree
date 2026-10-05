@@ -91,6 +91,15 @@ The `validate` subcommand validates that a given receipt is properly structured 
 
 # Patch Notes
 
+## 5 October 2026
+
+- Updated REE image to v0.8.0.
+- Stability improvements and hardening for NVIDIA GPUs backend.
+- On Apple silicon, the SDK now defaults to bfloat16 instead of float16, which keeps nearly every operation on the GPU instead of falling back to the CPU. Pass `--torch-dtype` to choose explicitly.
+- `ree.sh` now keeps waiting while another process holds apt's package-list lock, instead of failing the install.
+- Faster reproducible CUDA inference, including split-K decode attention, warp-specialized decode GEMVs and fused RMSNorm.
+- Receipt compatibility: v0.8.0 changes some outputs relative to v0.7.0. CUDA decode and speculative-verify attention over contexts longer than 256 tokens now splits its work differently, and the int8 Hadamard GEMM on CUDA and Metal now matches the CPU when its dequantization overflows. Some v0.7.0 receipts may not re-verify with v0.8.0.
+
 ## 30 September 2026
 
 - Updated REE image to v0.7.0.

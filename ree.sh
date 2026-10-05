@@ -43,7 +43,7 @@ set -euo pipefail
 # See the gensyn-sdk documentation for more detailed usage options:
 #   https://docs.gensyn.ai/tech/ree
 
-IMAGE_REMOTE="gensynai/ree:v0.7.0"
+IMAGE_REMOTE="gensynai/ree:v0.8.0"
 IMAGE_LOCAL="ree"
 
 emit_phase() {
@@ -181,28 +181,43 @@ install_acl_linux() {
   # unattended-upgrades holds the package-list lock, and `update` exits within
   # milliseconds having fetched nothing. Retry it, and print its output when it
   # gives up, so the log says why instead of repeating "no installation
-  # candidate".
+  # candidate". A boot-time upgrade can hold the lock for several minutes
+  # (build 31454 gave up after one), and `update` ignores
+  # DPkg::Lock::Timeout for the package-list lock, so a lock failure keeps
+  # waiting for up to ten minutes while any other failure gives up after six
+  # tries. `install` does honour the timeout for the dpkg lock.
   for apt_bin in apt apt-get; do
     command -v "$apt_bin" >/dev/null 2>&1 || continue
-    sudo -n env DEBIAN_FRONTEND=noninteractive NEEDRESTART_MODE=a "$apt_bin" install -y acl && return 0
+    sudo -n env DEBIAN_FRONTEND=noninteractive NEEDRESTART_MODE=a "$apt_bin" -o DPkg::Lock::Timeout=600 install -y acl && return 0
     echo "Note: installing acl failed; refreshing package lists and retrying." >&2
-    local update_log attempt
+    local update_log attempt locked failures=0
     update_log="$(mktemp)"
-    for attempt in 1 2 3 4 5 6; do
+    for attempt in $(seq 1 60); do
       # The log is the caller's own temp file; it should not be opened as root.
       # shellcheck disable=SC2024
       if sudo -n env DEBIAN_FRONTEND=noninteractive NEEDRESTART_MODE=a "$apt_bin" update >"$update_log" 2>&1; then
         break
       fi
-      if [[ "$attempt" == 6 ]]; then
-        echo "Warning: '$apt_bin update' failed 6 times; last output:" >&2
-        cat "$update_log" >&2
+      if grep -q 'Could not get lock' "$update_log"; then
+        locked=1
       else
-        sleep 10
+        locked=0
+        failures=$((failures + 1))
       fi
+      if [[ "$failures" -ge 6 || "$attempt" == 60 ]]; then
+        echo "Warning: '$apt_bin update' failed $attempt times; last output:" >&2
+        cat "$update_log" >&2
+        break
+      fi
+      # A held lock can take minutes to clear; say so about once a minute so the
+      # wait is not mistaken for a hang.
+      if [[ "$locked" == 1 && $((attempt % 6)) == 1 ]]; then
+        echo "Note: package-list lock is held; still retrying '$apt_bin update' (attempt $attempt of 60)." >&2
+      fi
+      sleep 10
     done
     rm -f "$update_log"
-    sudo -n env DEBIAN_FRONTEND=noninteractive NEEDRESTART_MODE=a "$apt_bin" install -y acl && return 0
+    sudo -n env DEBIAN_FRONTEND=noninteractive NEEDRESTART_MODE=a "$apt_bin" -o DPkg::Lock::Timeout=600 install -y acl && return 0
     break
   done
   if command -v dnf >/dev/null 2>&1; then
